@@ -3,6 +3,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Panel extends JPanel implements KeyListener, Runnable {
+
+
+
+
     @Override
     public void keyTyped(KeyEvent e) {
 
