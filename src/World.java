@@ -11,6 +11,7 @@ public class World {
     private File f;
     private Scanner fileReader;
     public World(File f) {
+        NonplayerList = new ArrayList<NonPlayer>();
         try {
             this.f = f;
             fileReader = new Scanner(f);
@@ -21,17 +22,28 @@ public class World {
     }
     public void textConverter() {
         try{
+            System.out.println("nice!");
             int curr = -1;
             int c=0;
+            System.out.println(fileReader.hasNextInt());
             while(fileReader.hasNextInt()) {
                 curr=fileReader.nextInt();
-                c++;
+
+
                 if(curr==0) {
                     NonplayerList.add(new NonPlayer(0, 0, c%10, c/10, 0, 10, 10));
                 }
                 if(curr==4) {
                     NonplayerList.add(new Wall(0, Constants.WALL, c%10, c/10, 0, 10, 10));
                 }
+
+                if(curr==5) {
+                    NonplayerList.add(new Wall(0, Constants.GOAL, c%10, c/10, 0, 10, 10));
+                }
+                if(curr==6) {
+                    NonplayerList.add(new Wall(0, Constants.PLAYER, c%10, c/10, 0, 10, 10));
+                }
+                c++;
             }
         }
         catch (Exception e) {
