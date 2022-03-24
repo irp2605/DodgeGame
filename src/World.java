@@ -31,17 +31,17 @@ public class World {
 
 
                 if(curr==0) {
-                    NonplayerList.add(new NonPlayer(0, 0, c%10, c/10, 0, 10, 10));
+                    NonplayerList.add(new NonPlayer(0, 0, c%18, c/18, 0, 10, 10));
                 }
                 if(curr==4) {
-                    NonplayerList.add(new Wall(0, Constants.WALL, c%10, c/10, 0, 10, 10));
+                    NonplayerList.add(new Wall(0, Constants.WALL, c%18, c/18, 0, 10, 10));
                 }
 
                 if(curr==5) {
-                    NonplayerList.add(new Wall(0, Constants.GOAL, c%10, c/10, 0, 10, 10));
+                    NonplayerList.add(new Wall(0, Constants.GOAL, c%18, c/18, 0, 10, 10));
                 }
                 if(curr==6) {
-                    NonplayerList.add(new Wall(0, Constants.PLAYER, c%10, c/10, 0, 10, 10));
+                    NonplayerList.add(new Wall(0, Constants.PLAYER, c%18, c/18, 0, 10, 10));
                 }
                 c++;
             }
