@@ -13,7 +13,7 @@ public class Panel extends JPanel implements KeyListener, Runnable {
     private int updatesPerSecond = 30;
     private Thread t;
     public Panel() {
-        setSize(1000,1000);
+        setSize(500,500);
         addKeyListener(this);
         Thread t = new Thread(this);
         t.start();
@@ -40,19 +40,19 @@ public class Panel extends JPanel implements KeyListener, Runnable {
     }
     public void paint(Graphics g) {
         g.setColor(Color.black);
-        g.fillRect(-100, -100, 99999,99999);
+        g.fillRect(-100, -100, 999999,999999);
         g.setFont(new Font("Times New Roman", Font.BOLD, 25));
         for(int c=0; c<world.getNonplayerList().size(); c++) {
             int x = world.getNonplayerList().get(c).getGridX()*100-((int)player.getHitbox().getX());
             int y = world.getNonplayerList().get(c).getGridY()*100-(int)player.getHitbox().getY();
             if(player.getHitbox().getX()<=0)
                 x=world.getNonplayerList().get(c).getGridX()*100;
-            if(player.getHitbox().getX()>=800)
-                x=world.getNonplayerList().get(c).getGridX()*100-800;
+            if(player.getHitbox().getX()>=99999999)
+                x=world.getNonplayerList().get(c).getGridX()*100-99999999;
             if(player.getHitbox().getY()<=0)
                 y=world.getNonplayerList().get(c).getGridY()*100;
-            if(player.getHitbox().getY()>=800)
-                y=world.getNonplayerList().get(c).getGridY()*100-800;
+            if(player.getHitbox().getY()>=99999999)
+                y=world.getNonplayerList().get(c).getGridY()*100-99999999;
             if(world.getNonplayerList().get(c).getType()==0) {
                 g.setColor(Color.lightGray);
                 g.fillRect(x, y, 100, 100);
@@ -79,16 +79,17 @@ public class Panel extends JPanel implements KeyListener, Runnable {
         int y = 0;
         if(player.getHitbox().getX()<0)
             x=(int)player.getHitbox().getX();
-        if(player.getHitbox().getX()>800)
-            x=(int)player.getHitbox().getX()-800;
+        if(player.getHitbox().getX()>99999999)
+            x=(int)player.getHitbox().getX()-99999999;
         if(player.getHitbox().getY()<0)
             y=(int)player.getHitbox().getY();
-        if(player.getHitbox().getY()>800)
-            y=(int)player.getHitbox().getY()-800;
-        g.fillOval(x+500, y+500, 50, 50);
-        player.setHurtbox(new Rectangle(x+500, y+500, 50, 50));
-        g.fillRect((int)player.getHitbox().getX(), (int)player.getHitbox().getY(), 10, 10);
-
+        if(player.getHitbox().getY()>99999999)
+            y=(int)player.getHitbox().getY()-99999999;
+        g.fillRect(x+250, y+250, 40, 40);
+        player.setHurtbox(new Rectangle(x+250, y+250, 40, 40));
+        g.fillRect((int)player.getHitbox().getX(), (int)player.getHitbox().getY(), 40, 40);
+        g.setColor(Color.BLACK);
+        g.fillRect((int)player.getHurtbox().getX(), (int)player.getHurtbox().getY(), 10, 10);
         repaint();
     }
 
