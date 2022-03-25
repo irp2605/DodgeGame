@@ -47,12 +47,12 @@ public class Panel extends JPanel implements KeyListener, Runnable {
             int y = world.getNonplayerList().get(c).getGridY()*100-(int)player.getHitbox().getY();
             if(player.getHitbox().getX()<=0)
                 x=world.getNonplayerList().get(c).getGridX()*100;
-            if(player.getHitbox().getX()>=99999999)
-                x=world.getNonplayerList().get(c).getGridX()*100-99999999;
+            if(player.getHitbox().getX()>=3500)
+                x=world.getNonplayerList().get(c).getGridX()*100-3500;
             if(player.getHitbox().getY()<=0)
                 y=world.getNonplayerList().get(c).getGridY()*100;
-            if(player.getHitbox().getY()>=99999999)
-                y=world.getNonplayerList().get(c).getGridY()*100-99999999;
+            if(player.getHitbox().getY()>=3500)
+                y=world.getNonplayerList().get(c).getGridY()*100-3500;
             if(world.getNonplayerList().get(c).getType()==0) {
                 g.setColor(Color.lightGray);
                 g.fillRect(x, y, 100, 100);
@@ -79,12 +79,12 @@ public class Panel extends JPanel implements KeyListener, Runnable {
         int y = 0;
         if(player.getHitbox().getX()<0)
             x=(int)player.getHitbox().getX();
-        if(player.getHitbox().getX()>99999999)
-            x=(int)player.getHitbox().getX()-99999999;
+        if(player.getHitbox().getX()>3500)
+            x=(int)player.getHitbox().getX()-3500;
         if(player.getHitbox().getY()<0)
             y=(int)player.getHitbox().getY();
-        if(player.getHitbox().getY()>99999999)
-            y=(int)player.getHitbox().getY()-99999999;
+        if(player.getHitbox().getY()>3500)
+            y=(int)player.getHitbox().getY()-3500;
         g.fillRect(x+250, y+250, 40, 40);
         player.setHurtbox(new Rectangle(x+250, y+250, 40, 40));
         g.fillRect((int)player.getHitbox().getX(), (int)player.getHitbox().getY(), 40, 40);
