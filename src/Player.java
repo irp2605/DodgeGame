@@ -60,7 +60,7 @@ public class Player {
     public Player (int gridX, int gridY, int direction, int lives){
         this.gridX = gridX;
         this.gridY = gridY;
-        hitbox = new Rectangle(gridX*10, gridY*10, 10, 10);
+        hitbox = new Rectangle(gridX*40, gridY*40, 40, 40);
         this.direction=direction;
         this.lives=lives;
     }
