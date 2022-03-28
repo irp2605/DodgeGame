@@ -25,6 +25,14 @@ public class Player {
         this.hitbox = hitbox;
     }
 
+    public Rectangle getHurtbox() {
+        return hurtbox;
+    }
+
+    public void setHurtbox(Rectangle hurtbox) {
+        this.hurtbox = hurtbox;
+    }
+
     public int getDirection() {
         return direction;
     }
@@ -44,6 +52,7 @@ public class Player {
     private int gridX;
     private int gridY;
     private Rectangle hitbox;
+    private Rectangle hurtbox;
     private int direction;
     private int lives;
 
@@ -51,7 +60,7 @@ public class Player {
     public Player (int gridX, int gridY, int direction, int lives){
         this.gridX = gridX;
         this.gridY = gridY;
-        hitbox = new Rectangle(gridX*10, gridY*10, 10, 10);
+        hitbox = new Rectangle(gridX*40, gridY*40, 40, 40);
         this.direction=direction;
         this.lives=lives;
     }
