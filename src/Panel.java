@@ -88,32 +88,30 @@ public class Panel extends JPanel implements KeyListener, Runnable {
             }
             if(world.getNonplayerList().get(c).getType()==Constants.GOAL) {
                 g.setColor(Color.GREEN);
-                g.fillRect(x, y, 100, 100);
+                g.fillRect(world.getNonplayerList().get(c).getGridX()*100-screenX, world.getNonplayerList().get(c).getGridY()*100-screenY, 100, 100);
             }
             if(world.getNonplayerList().get(c).getType()==Constants.PLAYER) {
                 g.setColor(Color.BLUE);
-                g.fillRect(x, y, 100, 100);
+                g.fillRect(world.getNonplayerList().get(c).getGridX()*100-screenX, world.getNonplayerList().get(c).getGridY()*100-screenY, 100, 100);
             }
-            //g.setColor(Color.black);
-            //g.drawRect(world.getNonplayerList().get(c).getGridX()*100, world.getNonplayerList().get(c).getGridY()*100, 100, 100);
+            g.setColor(Color.black);
+            g.drawRect((int)world.getNonplayerList().get(c).getRectangle().getX()-screenX, (int)world.getNonplayerList().get(c).getRectangle().getY()-screenY, 100, 100);
             //g.drawString(String.valueOf(c),world.getNonplayerList().get(c).getGridX()*100, world.getNonplayerList().get(c).getGridY()*100+100);
         }
         g.setColor(Color.pink);
-        int x = 0;
-        int y = 0;
+        int x = 250;
+        int y = 250;
         if(screenX==0)
-            x=(int)player.getHitbox().getX()-250;
+            x=(int)player.getHitbox().getX();
         if(screenX==maxX)
-            x=(int)player.getHitbox().getX()-3750;
+            x=(int)player.getHitbox().getX()-3500;
         if(screenY==0)
-            y=(int)player.getHitbox().getY()-250;
+            y=(int)player.getHitbox().getY();
         if(screenY==maxY)
-            y=(int)player.getHitbox().getY()-3750;
-        g.fillRect(x+250, y+250, 40, 40);
-        player.setHurtbox(new Rectangle(x+250, y+250, 40, 40));
+            y=(int)player.getHitbox().getY()-3500;
+        g.fillRect(x, y, 40, 40);
+        player.setHurtbox(new Rectangle(x, y, 40, 40));
         g.fillRect((int)player.getHitbox().getX(), (int)player.getHitbox().getY(), 40, 40);
-        g.setColor(Color.BLACK);
-        g.fillRect((int)player.getHurtbox().getX(), (int)player.getHurtbox().getY(), 10, 10);
         world.checkInteraction(player);
         repaint();
     }

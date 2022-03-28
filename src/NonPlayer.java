@@ -13,7 +13,7 @@ public class NonPlayer {
         this.gridX = gridX;
         this.gridY = gridY;
         this.speed = speed;
-        rectangle = new Rectangle(gridX*10, gridY*10, width, height);
+        rectangle = new Rectangle(gridX*100, gridY*100, width, height);
     }
 
     public int getType() {
