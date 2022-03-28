@@ -31,4 +31,9 @@ public class NonPlayer {
     public int getGridY() {
         return gridY;
     }
+
+    public Rectangle getRectangle(){
+
+        return rectangle;
+    }
 }

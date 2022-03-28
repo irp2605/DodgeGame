@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,7 +24,6 @@ public class World {
     }
     public void textConverter() {
         try{
-            System.out.println("nice!");
             int curr = -1;
             int c=0;
             System.out.println(fileReader.hasNextInt());
@@ -47,8 +47,27 @@ public class World {
                 c++;
             }
         }
+
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void checkInteraction(Player p) {
+        for(int i =0; i<NonplayerList.size(); i++) {
+            if(NonplayerList.get(i).getRectangle().intersects(p.getHitbox())) {
+                if(NonplayerList.get(i).getType()==Constants.WALL) {
+                    if (p.getDirection() == Constants.UP)
+                        p.setHitbox(new Rectangle((int) p.getHitbox().getX(), (int) p.getHitbox().getY() + Constants.PLAYER_SPEED, (int) p.getHitbox().getWidth(), (int) p.getHitbox().getHeight()));
+                    else if (p.getDirection() == Constants.DOWN)
+                        p.setHitbox(new Rectangle((int) p.getHitbox().getX(), (int) p.getHitbox().getY() - Constants.PLAYER_SPEED, (int) p.getHitbox().getWidth(), (int) p.getHitbox().getHeight()));
+                    else if (p.getDirection() == Constants.RIGHT)
+                        p.setHitbox(new Rectangle((int) p.getHitbox().getX() - Constants.PLAYER_SPEED, (int) p.getHitbox().getY(), (int) p.getHitbox().getWidth(), (int) p.getHitbox().getHeight()));
+                    else if (p.getDirection() == Constants.LEFT)
+                        p.setHitbox(new Rectangle((int) p.getHitbox().getX() + Constants.PLAYER_SPEED, (int) p.getHitbox().getY(), (int) p.getHitbox().getWidth(), (int) p.getHitbox().getHeight()));
+                }
+            }
+        }
+
+
     }
 }

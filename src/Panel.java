@@ -1,3 +1,5 @@
+import com.sun.org.apache.bcel.internal.classfile.Constant;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,6 +14,18 @@ public class Panel extends JPanel implements KeyListener, Runnable {
     private ArrayList<World> worlds;
     private int updatesPerSecond = 30;
     private Thread t;
+    private int playerWidth = 0;
+    private int playerHeight = 0;
+    private int playerX = 0;
+    private int playerY = 0;
+    private int screenX = 0;
+    private int screenY = 0;
+    private int screenWidth = 500;
+    private int screenHeight = 500;
+    private int worldWidth = 4000;
+    private int worldHeight = 4000;
+    private int cellHeight = 100;
+    private int cellWidth = 100;
     public Panel() {
         setSize(500,500);
         addKeyListener(this);
@@ -22,7 +36,6 @@ public class Panel extends JPanel implements KeyListener, Runnable {
             worlds.add(new World(new File("C:\\Users\\B1003721\\Desktop\\DodgeGame\\src\\test.txt")));
             world = worlds.get(0);
             world.textConverter();
-            System.out.println(world.getNonplayerList().toString());
             player = new Player(-1,-1,0, 3);
             for(int c=0; c<world.getNonplayerList().size(); c++) {
                 if(world.getNonplayerList().get(c).getType()== Constants.PLAYER) {
@@ -31,7 +44,10 @@ public class Panel extends JPanel implements KeyListener, Runnable {
                 }
             }
             player.setHitbox(new Rectangle(player.getGridX()*100, player.getGridY()*100, 100, 100));
-            System.out.println(player.getHitbox().getX() + " " + player.getHitbox().getY());
+            int playerWidth = (int)player.getHitbox().getWidth();
+            int playerHeight = (int)player.getHitbox().getHeight();
+            int playerX = (int)player.getHitbox().getX();
+            int playerY = (int)player.getHitbox().getY();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -40,26 +56,35 @@ public class Panel extends JPanel implements KeyListener, Runnable {
     }
     public void paint(Graphics g) {
         g.setColor(Color.black);
+        playerX=(int)player.getHitbox().getX();
+        playerY=(int)player.getHitbox().getY();
+        int pixelsLeftRightPlayer = (screenWidth-playerWidth)/2;
+        int pixelsAboveBelowPlayer = (screenHeight-playerHeight)/2;
+        int maxX = worldWidth-screenWidth;
+        int tempX = playerX-pixelsLeftRightPlayer;
+        System.out.println("time is " + tempX + " max is " + maxX);
+
+        screenX=(tempX<0)?0:(tempX>maxX)?maxX:tempX;
+
+        int maxY = worldHeight-screenHeight;
+        int tempY = playerY-pixelsAboveBelowPlayer;
+        screenY=(tempY<0)?0:(tempY>maxY)?maxY:tempY;
+        int startRow = screenY/cellHeight;
+        int startCol = screenX/cellWidth;
+        int endRow =(int) (startRow+Math.ceil(screenHeight/cellHeight));
+        int endCol = (int) (startCol+Math.ceil(screenWidth/cellWidth));
         g.fillRect(-100, -100, 999999,999999);
         g.setFont(new Font("Times New Roman", Font.BOLD, 25));
         for(int c=0; c<world.getNonplayerList().size(); c++) {
             int x = world.getNonplayerList().get(c).getGridX()*100-((int)player.getHitbox().getX());
             int y = world.getNonplayerList().get(c).getGridY()*100-(int)player.getHitbox().getY();
-            if(player.getHitbox().getX()<=0)
-                x=world.getNonplayerList().get(c).getGridX()*100;
-            if(player.getHitbox().getX()>=3500)
-                x=world.getNonplayerList().get(c).getGridX()*100-3500;
-            if(player.getHitbox().getY()<=0)
-                y=world.getNonplayerList().get(c).getGridY()*100;
-            if(player.getHitbox().getY()>=3500)
-                y=world.getNonplayerList().get(c).getGridY()*100-3500;
             if(world.getNonplayerList().get(c).getType()==0) {
                 g.setColor(Color.lightGray);
-                g.fillRect(x, y, 100, 100);
+                g.fillRect(world.getNonplayerList().get(c).getGridX()*100-screenX, world.getNonplayerList().get(c).getGridY()*100-screenY, 100, 100);
             }
             if(world.getNonplayerList().get(c).getType()==Constants.WALL) {
                 g.setColor(Color.RED);
-                g.fillRect(x, y, 100, 100);
+                g.fillRect(world.getNonplayerList().get(c).getGridX()*100-screenX, world.getNonplayerList().get(c).getGridY()*100-screenY, 100, 100);
             }
             if(world.getNonplayerList().get(c).getType()==Constants.GOAL) {
                 g.setColor(Color.GREEN);
@@ -74,22 +99,22 @@ public class Panel extends JPanel implements KeyListener, Runnable {
             //g.drawString(String.valueOf(c),world.getNonplayerList().get(c).getGridX()*100, world.getNonplayerList().get(c).getGridY()*100+100);
         }
         g.setColor(Color.pink);
-        System.out.println(player.getHitbox().getX() + " "  + player.getHitbox().getY());
         int x = 0;
         int y = 0;
-        if(player.getHitbox().getX()<0)
-            x=(int)player.getHitbox().getX();
-        if(player.getHitbox().getX()>3500)
-            x=(int)player.getHitbox().getX()-3500;
-        if(player.getHitbox().getY()<0)
-            y=(int)player.getHitbox().getY();
-        if(player.getHitbox().getY()>3500)
-            y=(int)player.getHitbox().getY()-3500;
+        if(screenX==0)
+            x=(int)player.getHitbox().getX()-250;
+        if(screenX==maxX)
+            x=(int)player.getHitbox().getX()-3750;
+        if(screenY==0)
+            y=(int)player.getHitbox().getY()-250;
+        if(screenY==maxY)
+            y=(int)player.getHitbox().getY()-3750;
         g.fillRect(x+250, y+250, 40, 40);
         player.setHurtbox(new Rectangle(x+250, y+250, 40, 40));
         g.fillRect((int)player.getHitbox().getX(), (int)player.getHitbox().getY(), 40, 40);
         g.setColor(Color.BLACK);
         g.fillRect((int)player.getHurtbox().getX(), (int)player.getHurtbox().getY(), 10, 10);
+        world.checkInteraction(player);
         repaint();
     }
 
@@ -109,19 +134,25 @@ public class Panel extends JPanel implements KeyListener, Runnable {
     @Override
     public void keyPressed(KeyEvent e) {
         char dir = e.getKeyChar();
-        System.out.println("w");
         if (dir == 'w') {
-            System.out.println("w");
+            player.setDirection(Constants.UP);
             player.setHitbox(new Rectangle((int)player.getHitbox().getX(), (int)player.getHitbox().getY()- Constants.PLAYER_SPEED, (int)player.getHitbox().getWidth(), (int)player.getHitbox().getHeight()));
+            world.checkInteraction(player);
         }
         if (dir == 'a') {
+            player.setDirection(Constants.LEFT);
             player.setHitbox(new Rectangle((int)player.getHitbox().getX()- Constants.PLAYER_SPEED, (int)player.getHitbox().getY(), (int)player.getHitbox().getWidth(), (int)player.getHitbox().getHeight()));
+            world.checkInteraction(player);
         }
         if (dir == 'd') {
+            player.setDirection(Constants.RIGHT);
             player.setHitbox(new Rectangle((int)player.getHitbox().getX()+ Constants.PLAYER_SPEED, (int)player.getHitbox().getY(), (int)player.getHitbox().getWidth(), (int)player.getHitbox().getHeight()));
+            world.checkInteraction(player);
         }
         if (dir == 's') {
+            player.setDirection(Constants.DOWN);
             player.setHitbox(new Rectangle((int)player.getHitbox().getX(), (int)player.getHitbox().getY()+ Constants.PLAYER_SPEED, (int)player.getHitbox().getWidth(), (int)player.getHitbox().getHeight()));
+            world.checkInteraction(player);
         }
     }
 
