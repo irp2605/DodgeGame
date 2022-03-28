@@ -43,7 +43,7 @@ public class Panel extends JPanel implements KeyListener, Runnable {
                     player.setGridY(world.getNonplayerList().get(c).getGridY());
                 }
             }
-            player.setHitbox(new Rectangle(player.getGridX()*100, player.getGridY()*100, 100, 100));
+            player.setHitbox(new Rectangle(player.getGridX()*100, player.getGridY()*100, 40, 40));
             int playerWidth = (int)player.getHitbox().getWidth();
             int playerHeight = (int)player.getHitbox().getHeight();
             int playerX = (int)player.getHitbox().getX();
@@ -109,6 +109,7 @@ public class Panel extends JPanel implements KeyListener, Runnable {
             y=(int)player.getHitbox().getY();
         if(screenY==maxY)
             y=(int)player.getHitbox().getY()-3500;
+        System.out.println(player.getHitbox().getWidth() + " " + player.getHitbox().getHeight());
         g.fillRect(x, y, 40, 40);
         player.setHurtbox(new Rectangle(x, y, 40, 40));
         g.fillRect((int)player.getHitbox().getX(), (int)player.getHitbox().getY(), 40, 40);
