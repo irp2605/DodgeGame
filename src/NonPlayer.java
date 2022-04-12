@@ -1,6 +1,10 @@
 import java.awt.*;
 
 public class NonPlayer {
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
     private int direction;
     private int type;
     private int gridX;
@@ -35,5 +39,8 @@ public class NonPlayer {
     public Rectangle getRectangle(){
 
         return rectangle;
+    }
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
     }
 }

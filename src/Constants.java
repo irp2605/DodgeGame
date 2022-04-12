@@ -1,7 +1,7 @@
 public class Constants {
-    public static final int LINEAR_SPEED = 5;
+    public static final int LINEAR_SPEED = 1;
     public static final int PATTERN_SPEED = 5;
-    public static final int PLAYER_SPEED = 5;
+    public static final int PLAYER_SPEED = 2;
     public static final int UP = 1;
     public static final int DOWN= 2;
     public static final int LEFT = 3;
